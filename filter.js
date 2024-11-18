@@ -21,6 +21,20 @@ const people = [
   },
 ];
 
+const oldEnough = people.filter(person => person.age >= 21);
+console.log(oldEnough);
+
+const paul = people.filter(p => p.name === 'Paul');
+console.log(paul);
+
+// One thing to note here is that the filter method always returns an array, even if ts just an array 
+// with one element. If I want to access the object itself I could simply ammend [0] to the end
+// to get the first and only element in the resulting array.
+const paul2 = people.filter(p => p.name === 'Paul')[0];
+console.log(paul2);
+
+
+
 
 // Complex Filtering
 const students = [
@@ -55,3 +69,29 @@ const students = [
     ]
   },
 ];
+
+// return list of students that have at least 5 yrs experience in at least one skill
+//This filter will return an array of only those skills in which  the student has at least five years of experience.  
+//In the case of Ariel, it will just return an empty  array, since none of her skills pass that test.  
+//This is a key thing to realize, since  now, all I need to do to return a true  
+//or false result for the original filter is return  whether strongSkills.length is greater than zero.  
+
+//long way to do it
+const candidates =students.filter(student => {
+  let strongSkills = student.skills.filter(skill => skill.yrsExperience >= 5);
+  return strongSkills.length > 0;
+});
+
+console.log(candidates);
+
+//short or simplified version, split filter and filter function. 
+// write callback function first and pass it into the filter method.
+const has5yearsExp = skill => skill.yrsExperience >=5;
+const hasStrongSkills = student => student.skills.filter(has5yearsExp).length > 0;
+const candidates2 = students.filter(hasStrongSkills);
+
+//return names only array using map method
+let names = candidates2.map(candidate =>[candidate.name]);
+
+console.log(candidates2);
+console.log(names);
